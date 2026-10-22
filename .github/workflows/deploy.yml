@@ -3,7 +3,8 @@ name: Deploy HELMEnt to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -20,10 +21,11 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Node.js
@@ -35,17 +37,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build website
+      - name: Build HELMEnt
         run: npm run build
 
-      - name: Configure Pages
+      - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
-      - name: Upload website
+      - name: Upload website artifact
         uses: actions/upload-pages-artifact@v4
         with:
           path: dist
 
-      - name: Deploy website
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
