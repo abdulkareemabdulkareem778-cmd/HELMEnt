@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Wallet, Clock3, CheckCircle2 } from "lucide-react";
 import { supabase } from "../lib/supabase";
+import { notify } from "../components/ToastViewport";
 
 const money = (n) => "₦" + Number(n || 0).toLocaleString("en-NG");
 const shell = { minHeight:"100vh", background:"#07111f", color:"#eef5fb", padding:"28px 16px", fontFamily:"Arial,sans-serif" };
@@ -62,9 +63,10 @@ export default function Withdraw() {
       });
       if(insertError) throw insertError;
       setMessage("Withdrawal request submitted. Your balance has been reserved while the request is reviewed.");
+      notify("Withdrawal request submitted for review.", "success");
       setForm({amount:"",bank_name:"",account_name:"",account_number:""});
       await load();
-    }catch(e){setError(e.message||"Could not submit your withdrawal.");}
+    }catch(e){setError(e.message||"Could not submit your withdrawal.");notify(e.message||"Could not submit your withdrawal.", "error");}
     finally{setSaving(false);}
   };
 
