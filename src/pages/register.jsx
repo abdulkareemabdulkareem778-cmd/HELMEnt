@@ -561,8 +561,7 @@ function Register() {
               />
 
               <span>
-                I agree to HELMEnt's Terms of Service and
-                Privacy Policy.
+                I agree to HELMEnt's <Link to="/terms" style={{color:"#56e39f"}}>Terms & Conditions</Link> and <Link to="/privacy" style={{color:"#56e39f"}}>Privacy Policy</Link>.
               </span>
 
             </label>
