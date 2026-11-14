@@ -262,7 +262,7 @@ function Home() {
                   <div>
 
                     <p className="muted">
-                      Available balance
+                      Example balance
                     </p>
 
                     <h2>₦9,750</h2>
@@ -315,7 +315,7 @@ function Home() {
                   to="/login"
                   className="withdraw-preview"
                 >
-                  Withdrawal available
+                  Eligibility-based withdrawals
                   <ArrowRight size={17} />
                 </Link>
 
