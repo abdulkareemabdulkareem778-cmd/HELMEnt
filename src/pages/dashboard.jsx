@@ -18,6 +18,7 @@ import {
   Zap,
 } from "lucide-react";
 import { supabase } from "../lib/supabase";
+import { notify } from "../components/ToastViewport";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -159,6 +160,7 @@ function Dashboard() {
       }, 2000);
     } catch {
       setError("Unable to copy your referral link.");
+      notify("Unable to copy your referral link.", "error");
     }
   };
 
@@ -352,6 +354,7 @@ function Dashboard() {
       await loadDashboard();
     } catch (err) {
       console.error("Task submission error:", err);
+      notify(err?.message || "Unable to submit this task. Please try again.", "error");
 
       setError(
         err?.message ||
