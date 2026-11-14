@@ -31,6 +31,7 @@ import {
 } from "lucide-react";
 
 import { useState } from "react";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -75,11 +76,7 @@ function Home() {
         <div className="container nav-inner">
 
           <Link to="/" className="logo">
-            <span className="logo-mark">
-              <Sparkles size={18} />
-            </span>
-
-            <span>
+            <span className="brand-wordmark">
               HELM<span>Ent</span>
             </span>
           </Link>
@@ -680,11 +677,7 @@ function Home() {
               className="logo footer-logo"
             >
 
-              <span className="logo-mark">
-                <Sparkles size={18} />
-              </span>
-
-              <span>
+              <span className="brand-wordmark">
                 HELM<span>Ent</span>
               </span>
 
@@ -902,10 +895,10 @@ function App() {
 
         <Route
           path="/dashboard"
-          element={<Dashboard />}
+          element={<ProtectedRoute><Dashboard /></ProtectedRoute>}
         />
 
-        <Route path="/withdraw" element={<Withdraw />} />
+        <Route path="/withdraw" element={<ProtectedRoute><Withdraw /></ProtectedRoute>} />
 
 
         {/* =========================
@@ -919,26 +912,26 @@ function App() {
 
         <Route
           path="/admin/dashboard"
-          element={<AdminDashboard />}
+          element={<ProtectedRoute loginPath="/admin/login"><AdminDashboard /></ProtectedRoute>}
         />
 
         <Route
           path="/admin/users"
-          element={<AdminUsers />}
+          element={<ProtectedRoute loginPath="/admin/login"><AdminUsers /></ProtectedRoute>}
         />
 
         <Route
           path="/admin/tasks"
-          element={<AdminTasks />}
+          element={<ProtectedRoute loginPath="/admin/login"><AdminTasks /></ProtectedRoute>}
         />
 
         <Route
           path="/admin/submissions"
-          element={<AdminSubmissions />}
+          element={<ProtectedRoute loginPath="/admin/login"><AdminSubmissions /></ProtectedRoute>}
         />
 
-        <Route path="/admin/withdrawals" element={<AdminWithdrawals />} />
-        <Route path="/admin/referrals" element={<AdminReferrals />} />
+        <Route path="/admin/withdrawals" element={<ProtectedRoute loginPath="/admin/login"><AdminWithdrawals /></ProtectedRoute>} />
+        <Route path="/admin/referrals" element={<ProtectedRoute loginPath="/admin/login"><AdminReferrals /></ProtectedRoute>} />
 
       </Routes>
 
