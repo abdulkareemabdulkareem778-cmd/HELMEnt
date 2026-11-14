@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, LockKeyhole, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { supabase } from "../lib/supabase";
+import { notify } from "../components/ToastViewport";
 
 function Login() {
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ function Login() {
       }
 
       setMessage("Login successful. Opening your dashboard...");
+      notify("Login successful. Welcome back!", "success");
 
       // Give Supabase a moment to save the session
       setTimeout(() => {
@@ -45,6 +47,7 @@ function Login() {
         err?.message ||
           "Unable to log in. Please check your email and password."
       );
+      notify(err?.message || "Unable to log in. Check your details and try again.", "error");
     } finally {
       setLoading(false);
     }
