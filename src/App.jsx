@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Register from "./pages/register";
 import Login from "./pages/login";
 import Dashboard from "./pages/dashboard";
+import Withdraw from "./pages/Withdraw";
+import AdminWithdrawals from "./pages/AdminWithdrawals";
+import AdminReferrals from "./pages/AdminReferrals";
 
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -901,6 +904,8 @@ function App() {
           element={<Dashboard />}
         />
 
+        <Route path="/withdraw" element={<Withdraw />} />
+
 
         {/* =========================
             ADMIN
@@ -930,6 +935,9 @@ function App() {
           path="/admin/submissions"
           element={<AdminSubmissions />}
         />
+
+        <Route path="/admin/withdrawals" element={<AdminWithdrawals />} />
+        <Route path="/admin/referrals" element={<AdminReferrals />} />
 
       </Routes>
 
