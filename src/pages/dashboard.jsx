@@ -81,7 +81,6 @@ function Dashboard() {
         supabase
           .from("tasks")
           .select("*")
-          .eq("is_active", true)
           .order("created_at", { ascending: true }),
 
         supabase
@@ -184,6 +183,7 @@ function Dashboard() {
   }, [taskCompletions]);
 
   const balance = Number(profile?.balance || 0);
+  const availableTasks = tasks.filter((task) => task.is_active);
 
   const tiktokTask = tasks.find((task) => {
     const title = String(task.title || "").toLowerCase();
@@ -834,11 +834,11 @@ function Dashboard() {
             </div>
 
             <span style={styles.progressText}>
-              {tasks.length} available
+              {availableTasks.length} available
             </span>
           </div>
 
-          {tasks.length === 0 ? (
+          {availableTasks.length === 0 ? (
             <div style={styles.emptyCard}>
               <div style={styles.emptyIcon}>
                 <Clock3 size={25} />
@@ -858,7 +858,7 @@ function Dashboard() {
               className="helment-task-grid"
               style={styles.taskGrid}
             >
-              {tasks.map((task) => {
+              {availableTasks.map((task) => {
                 const status = getTaskStatus(task);
                 const completion = getTaskCompletion(task.id);
 
