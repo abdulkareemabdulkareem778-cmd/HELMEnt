@@ -12,6 +12,8 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AdminUsers from "./pages/AdminUsers";
 import AdminTasks from "./pages/AdminTasks";
 import AdminSubmissions from "./pages/AdminSubmissions";
+import LegalPage from "./pages/LegalPage";
+import ToastViewport from "./components/ToastViewport";
 
 import {
   ArrowRight,
@@ -743,13 +745,11 @@ function Home() {
                 Legal
               </strong>
 
-              <a href="#home">
-                Terms
-              </a>
+              <Link to="/terms">Terms & Conditions</Link>
 
-              <a href="#home">
-                Privacy
-              </a>
+              <Link to="/privacy">Privacy Policy</Link>
+
+              <Link to="/support">Help & Support</Link>
 
             </div>
 
@@ -868,16 +868,17 @@ function App() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, "")}>
 
+      <ToastViewport />
       <Routes>
 
         {/* =========================
             PUBLIC WEBSITE
         ========================= */}
 
-        <Route
-          path="/"
-          element={<Home />}
-        />
+        <Route path="/" element={<Home />} />
+        <Route path="/terms" element={<LegalPage page="terms" />} />
+        <Route path="/privacy" element={<LegalPage page="privacy" />} />
+        <Route path="/support" element={<LegalPage page="support" />} />
 
 
         {/* =========================
