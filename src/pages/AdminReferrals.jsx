@@ -2,6 +2,7 @@ import {useEffect,useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {ArrowLeft,RefreshCw,ShieldCheck} from "lucide-react";
 import {supabase} from "../lib/supabase";
+import {notify} from "../components/ToastViewport";
 
 export default function AdminReferrals(){
  const navigate=useNavigate();const [rows,setRows]=useState([]);const [loading,setLoading]=useState(true);const [error,setError]=useState("");const [busy,setBusy]=useState(null);
@@ -14,7 +15,7 @@ export default function AdminReferrals(){
   const map=new Map(profiles.map(p=>[p.id,p]));setRows((data||[]).map(x=>({...x,referrer:map.get(x.referrer_id),referred:map.get(x.referred_user_id)})));
  }catch(e){setError(e.message||"Unable to load referrals.");}finally{setLoading(false);}};
  useEffect(()=>{load();},[]);
- const update=async(row,status)=>{setBusy(row.id);setError("");try{const {error:e}=await supabase.from("referrals").update({status}).eq("id",row.id).eq("status","pending");if(e)throw e;await load();}catch(e){setError(e.message||"Unable to update referral.");}finally{setBusy(null);}};
+ const update=async(row,status)=>{setBusy(row.id);setError("");try{const {error:e}=await supabase.from("referrals").update({status}).eq("id",row.id).eq("status","pending");if(e)throw e;notify(status==="approved"?"Referral approved. The eligible reward has been credited.":"Referral rejected.","success");await load();}catch(e){setError(e.message||"Unable to update referral.");notify(e.message||"Unable to update referral.","error");}finally{setBusy(null);}};
  const name=p=>p?((p.first_name||"")+" "+(p.last_name||"")).trim()||p.phone||"User":"User";
  return <main style={{minHeight:"100vh",background:"#07111f",color:"#eef5fb",padding:24,fontFamily:"Arial,sans-serif"}}><div style={{maxWidth:1000,margin:"auto"}}>
  <button onClick={()=>navigate("/admin/dashboard")} style={{background:"none",border:0,color:"#56e39f",cursor:"pointer"}}><ArrowLeft size={16}/> Back to admin</button>
