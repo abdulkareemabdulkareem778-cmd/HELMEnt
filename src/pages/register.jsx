@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, CheckCircle2, LockKeyhole, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { supabase } from "../lib/supabase";
+import { notify } from "../components/ToastViewport";
 
 function Register() {
   const navigate = useNavigate();
@@ -100,6 +101,7 @@ function Register() {
       // If user is immediately logged in
       if (data.session) {
         setMessage("Account created successfully! Redirecting...");
+        notify("Account created successfully. Opening your dashboard.", "success");
 
         setTimeout(() => {
           navigate("/dashboard");
@@ -111,6 +113,7 @@ function Register() {
       setMessage("Account created successfully! You can now log in.");
     } catch (err) {
       console.error("Registration error:", err);
+      notify(err.message || "Registration failed. Please try again.", "error");
 
       if (err.message?.toLowerCase().includes("user already registered")) {
         setError(
