@@ -16,7 +16,7 @@ function Register() {
     email: "",
     phone: "",
     password: "",
-    referralCode: "",
+    referralCode: new URLSearchParams(window.location.search).get("ref") || "",
     terms: false,
   });
 
