@@ -8,7 +8,6 @@ import {
   ClipboardCheck,
   Wallet,
   UserPlus,
-  Settings,
   LogOut,
   Menu,
   X,
@@ -288,14 +287,6 @@ export default function AdminDashboard() {
             <span>Referrals</span>
           </button>
 
-          {/* SETTINGS */}
-          <button
-            className="admin-nav-item"
-            onClick={() => goTo("/admin/settings")}
-          >
-            <Settings size={19} />
-            <span>Settings</span>
-          </button>
 
         </nav>
 
