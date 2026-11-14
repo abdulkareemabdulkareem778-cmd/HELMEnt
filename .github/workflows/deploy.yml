@@ -47,6 +47,9 @@ jobs:
         with:
           enablement: true
 
+      - name: Configure SPA fallback for GitHub Pages
+        run: cp dist/index.html dist/404.html
+
       - name: Upload website artifact
         uses: actions/upload-pages-artifact@v4
         with:
