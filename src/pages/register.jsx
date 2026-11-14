@@ -64,6 +64,7 @@ function Register() {
         password: formData.password,
 
         options: {
+          emailRedirectTo: `${window.location.origin}${import.meta.env.BASE_URL}`,
           data: {
             first_name: formData.firstName.trim(),
             last_name: formData.lastName.trim(),
