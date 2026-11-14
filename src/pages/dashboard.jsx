@@ -148,7 +148,7 @@ function Dashboard() {
     profile?.referral_code ||
     (user?.id ? `HELM${user.id.replace(/-/g, "").substring(0, 8).toUpperCase()}` : "HELMENT");
 
-  const referralLink = `${window.location.origin}/register?ref=${referralCode}`;
+  const referralLink = `${window.location.origin}${import.meta.env.BASE_URL}register?ref=${encodeURIComponent(referralCode)}`;
 
   const copyReferral = async () => {
     try {
@@ -325,25 +325,22 @@ function Dashboard() {
     setSubmitting(true);
 
     try {
-      const { error: insertError } = await supabase
-        .from("task_completions")
-        .insert({
-          user_id: user.id,
-          task_id: selectedTask.id,
-          status: "pending",
-          proof: proof.trim(),
-          completed_at: new Date().toISOString(),
-        });
+      const submission = {
+        user_id: user.id,
+        task_id: selectedTask.id,
+        status: "pending",
+        proof: proof.trim(),
+        completed_at: new Date().toISOString(),
+      };
 
-      if (insertError) {
-        if (insertError.code === "23505") {
-          throw new Error(
-            "You have already submitted this task. Please wait for review."
-          );
-        }
+      const result = existingCompletion
+        ? await supabase
+            .from("task_completions")
+            .update({ status: "pending", proof: proof.trim(), completed_at: new Date().toISOString() })
+            .eq("id", existingCompletion.id)
+        : await supabase.from("task_completions").insert(submission);
 
-        throw insertError;
-      }
+      if (result.error) throw result.error;
 
       setMessage(
         "Task submitted successfully. Your submission is now pending review."
